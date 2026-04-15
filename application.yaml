@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/baby_trackr
+    username: postgres
+    password: "butterfly08$"
+  jpa:
+    hibernate:
+      ddl-auto:update #automatically creates and updates tables based on your Kotlin entities
+    show-sql: true
+#  services:
+#    postgres:
+#      image: postgres
+#      environment:
+#        POSTGRES_DB: baby_trackr
+#        POSTGRES_USER: postgres
+#        POSTGRES_PASSWORD: "butterfly08$"
+#      postgres:
+#        "5432:5432" #5432 (your computer) : 5432 (inside container)
