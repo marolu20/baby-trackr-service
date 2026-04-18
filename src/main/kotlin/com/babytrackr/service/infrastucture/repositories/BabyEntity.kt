@@ -10,6 +10,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import java.time.Instant
+import java.time.LocalDate
 
 @Entity
 @Table(name = "babies")
@@ -20,7 +21,7 @@ class BabyEntity(
     var firstName: String,
     var lastName: String,
     var nickname: String? = null,
-    var ageMonths: Int? = null,
+    var birthDate: LocalDate? = null,
     var sex: Sex? = null,
     var userId: String? = null,
     var createdOn: Instant,
