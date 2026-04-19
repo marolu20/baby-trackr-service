@@ -6,6 +6,7 @@ import java.time.Instant
 
 data class Event(
     val id: Long?,
+    val babyId: Long,
     val eventType: EventType,
     val payload: Map<String, Any>,
     val version: String = "v1",

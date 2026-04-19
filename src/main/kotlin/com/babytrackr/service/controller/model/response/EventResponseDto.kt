@@ -5,6 +5,7 @@ import java.time.Instant
 
 data class EventResponseDto(
     val id: Long,
+    val babyId: Long,
     val eventType: EventType,
     val payload: Map<String, Any>,
     val isCorrected: Boolean,

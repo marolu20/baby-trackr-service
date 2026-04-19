@@ -33,9 +33,9 @@ class EventEntity(
     var previousPayload: String? = null,
     var createdOn: Instant,
     var modifiedOn: Instant,
-    @Column(name="version")
+    @Column(name="version", nullable = false)
     var version: String = "v1",
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "baby_id")
-    var baby: BabyEntity? = null,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "baby_id", nullable = false)
+    var baby: BabyEntity,
 )
