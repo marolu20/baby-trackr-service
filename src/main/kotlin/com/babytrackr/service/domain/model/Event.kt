@@ -8,6 +8,7 @@ data class Event(
     val id: Long,
     val eventType: EventType,
     val payload: Map<String, Any>,
+    val version: String? = "v1",
     val createdOn: Instant,
     val modifiedOn: Instant
 ) {

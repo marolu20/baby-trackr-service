@@ -7,6 +7,7 @@ data class EventResponseDto(
     val id: Long,
     val eventType: EventType,
     val payload: Map<String, Any>,
+    val version: String,
     val createdOn: Instant,
     val modifiedOn: Instant
 )
