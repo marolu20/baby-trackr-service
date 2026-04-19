@@ -1,6 +1,6 @@
 package com.babytrackr.service.infrastucture.repositories
 
-import com.babytrackr.service.controller.model.request.Sex
+import com.babytrackr.service.domain.enums.Sex
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

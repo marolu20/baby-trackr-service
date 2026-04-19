@@ -1,7 +1,7 @@
 package com.babytrackr.service.domain.model
 
-import com.babytrackr.service.controller.model.request.DiaperType
-import com.babytrackr.service.controller.model.request.EventType
+import com.babytrackr.service.domain.enums.DiaperType
+import com.babytrackr.service.domain.enums.EventType
 import java.time.Instant
 
 data class Event(

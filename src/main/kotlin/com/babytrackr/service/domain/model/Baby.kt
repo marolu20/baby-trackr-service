@@ -1,6 +1,6 @@
 package com.babytrackr.service.domain.model
 
-import com.babytrackr.service.controller.model.request.Sex
+import com.babytrackr.service.domain.enums.Sex
 import java.time.Instant
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit

@@ -1,6 +1,6 @@
 package com.babytrackr.service.infrastucture.repositories
 
-import com.babytrackr.service.controller.model.request.EventType
+import com.babytrackr.service.domain.enums.EventType
 import com.vladmihalcea.hibernate.type.json.JsonType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

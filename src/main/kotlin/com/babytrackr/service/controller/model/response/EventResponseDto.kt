@@ -1,6 +1,6 @@
 package com.babytrackr.service.controller.model.response
 
-import com.babytrackr.service.controller.model.request.EventType
+import com.babytrackr.service.domain.enums.EventType
 import java.time.Instant
 
 data class EventResponseDto(
