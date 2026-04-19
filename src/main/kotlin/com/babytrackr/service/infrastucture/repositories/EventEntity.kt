@@ -27,9 +27,15 @@ class EventEntity(
     @Type(JsonType::class)
     @Column(columnDefinition = "jsonb")
     var payload: String, // Map<String, Any>,
+    var isCorrected: Boolean = false,
+    @Type(JsonType::class)
+    @Column(columnDefinition = "jsonb")
+    var previousPayload: String? = null,
     var createdOn: Instant,
     var modifiedOn: Instant,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "baby_id")
-    var babies: BabyEntity? = null,
+    @Column(name="version", nullable = false)
+    var version: String = "v1",
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "baby_id", nullable = false)
+    var baby: BabyEntity,
 )

@@ -5,9 +5,13 @@ import com.babytrackr.service.domain.enums.EventType
 import java.time.Instant
 
 data class Event(
-    val id: Long,
+    val id: Long?,
+    val babyId: Long,
     val eventType: EventType,
     val payload: Map<String, Any>,
+    val version: String = "v1",
+    val isCorrected: Boolean = false,
+    val previousPayload: Map<String, Any>? = null,
     val createdOn: Instant,
     val modifiedOn: Instant
 ) {

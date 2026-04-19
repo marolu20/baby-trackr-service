@@ -6,7 +6,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 data class Baby(
-    val id: Long,
+    val id: Long?,
     val firstName: String,
     val lastName: String,
     val nickname: String? = null,
