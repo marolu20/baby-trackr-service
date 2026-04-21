@@ -1,5 +1,6 @@
 package com.babytrackr.service.controller.model
 
+import com.babytrackr.service.application.services.BabyService
 import com.babytrackr.service.controller.model.request.CreateBabyRequestDto
 import com.babytrackr.service.controller.model.request.UpdateBabyRequestDto
 import com.babytrackr.service.controller.model.response.BabyResponseDto
@@ -20,26 +21,26 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Validated
 @RequestMapping("/v1/babies")
-class BabyController {
+class BabyController(val babyService: BabyService) {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     fun createBaby(
         @RequestBody @Valid request: CreateBabyRequestDto
     ): BabyResponseDto {
-        return // call service
+        return babyService.createBaby(request)
     }
 
     @GetMapping("/{babyId}")
     @ResponseStatus(HttpStatus.OK)
     fun retrieveBaby(@PathVariable("babyId") babyId: Long): BabyResponseDto {
-        return // call service
+        return babyService.getBaby(babyId)
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     fun retrieveAllBabies(): GetAllBabyResponseDto {
-        return // call service
+        return babyService.getAllBabies()
     }
 
     @PatchMapping("/{babyId}")
@@ -48,11 +49,12 @@ class BabyController {
         @PathVariable("babyId") babyId: Long,
         @RequestBody @Valid request: UpdateBabyRequestDto
         ): BabyResponseDto {
-        return // call service
+        return babyService.updateBaby(babyId, request)
     }
 
     @DeleteMapping("/{babyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteBaby(@PathVariable("babyId") babyId: Long) {
+        babyService.deleteBaby(babyId)
     }
 }

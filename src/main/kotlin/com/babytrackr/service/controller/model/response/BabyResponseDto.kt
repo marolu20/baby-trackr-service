@@ -10,10 +10,10 @@ data class BabyResponseDto(
     val lastName: String,
     val nickname: String? = null,
     val birthDate: LocalDate,
-    val ageWeeks: Long,
+    val ageWeeks: Int,
     val ageMonths: Int,
     val sex: Sex,
-    val ageYears: Long,
+    val ageYears: Int,
     val userId: String? = null,
     val createdOn: Instant,
     val modifiedOn: Instant

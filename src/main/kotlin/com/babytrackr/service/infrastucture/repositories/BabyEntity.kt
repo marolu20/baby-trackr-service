@@ -16,7 +16,7 @@ import java.time.LocalDate
 @Table(name = "babies")
 class BabyEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
     var firstName: String,
     var lastName: String,
