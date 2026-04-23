@@ -1,4 +1,7 @@
 spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/baby_trackr
@@ -6,7 +9,7 @@ spring:
     password: "butterfly08$"
   jpa:
     hibernate:
-      ddl-auto:update #automatically creates and updates tables based on your Kotlin entities
+      ddl-auto: update #automatically creates and updates tables based on your Kotlin entities
     show-sql: true
 #  services:
 #    postgres:
