@@ -26,10 +26,49 @@ curl -i http://localhost:8080/v1/babies
 
 Update Baby
 ==============
-curl -X PATCH http://localhost:8080/v1/babies/1 \
+curl -X PATCH http://localhost:8080/v1/babies/2 \
 -H "Content-Type: application/json" \
 -d '{"firstName": "joseph"}'
 
 Delete Baby
 ==============
 curl -i -X DELETE http://localhost:8080/v1/babies/1
+
+
+==============
+Event Controller
+==============
+
+Create Event
+==============
+curl -i -X POST http://localhost:8080/v1/babies/1/events \
+-H "Content-Type: application/json" \
+-d '{
+   "eventType":"FEED",
+   "payload": {
+    "feedingAmount": 5
+   }
+}'
+
+
+Get Events
+==============
+curl -i http://localhost:8080/v1/babies/1/events
+
+Get Event
+==============
+curl -i http://localhost:8080/v1/babies/1/events/1
+
+Update Event
+==============
+curl -X PATCH http://localhost:8080/v1/babies/1/events/1 \
+-H "Content-Type: application/json" \
+-d '{
+   "payload": {
+    "feedingAmount": 7
+   }
+}'
+
+Delete Event
+==============
+curl -i -X DELETE http://localhost:8080/v1/babies/1/events/2
