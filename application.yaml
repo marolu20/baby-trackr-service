@@ -10,6 +10,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update #automatically creates and updates tables based on your Kotlin entities
+    properties:
+      hibernate:
+        type:
+          json_format_mapper: jackson
     show-sql: true
 #  services:
 #    postgres:
