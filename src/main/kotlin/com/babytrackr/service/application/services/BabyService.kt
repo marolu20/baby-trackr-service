@@ -1,5 +1,6 @@
 package com.babytrackr.service.application.services
 
+import com.babytrackr.service.application.util.toTitleCase
 import com.babytrackr.service.controller.model.request.CreateBabyRequestDto
 import com.babytrackr.service.controller.model.response.BabyResponseDto
 import com.babytrackr.service.domain.model.Baby
@@ -11,11 +12,11 @@ import com.babytrackr.service.application.mapper.toBabyResponseDto
 import com.babytrackr.service.controller.model.request.UpdateBabyRequestDto
 import com.babytrackr.service.controller.model.response.GetAllBabyResponseDto
 import java.time.Instant
-import kotlin.String
 
 @Service
 class BabyService(
-    private val babyRepository: BabyRepository
+    private val babyRepository: BabyRepository,
+    private val babyFinder: BabyFinder
 ) {
 
     fun createBaby(request: CreateBabyRequestDto): BabyResponseDto {
@@ -33,51 +34,48 @@ class BabyService(
             modifiedOn = currentDate
         )
 
-        // convert domain to entity
-        val entity = baby.toEntity()
+        val babyEntity = baby.toEntity()
 
-        // save to repo
-        val savedEntity = babyRepository.save(entity)
+        val persistedBaby = babyRepository.save(babyEntity)
 
-        // convert entity to Domain
-        val savedDomain = savedEntity.toDomain()
+        val savedDomain = persistedBaby.toDomain()
 
-        //  convert to ResponseDto
         return savedDomain.toBabyResponseDto()
     }
 
 
     fun getBaby(id: Long): BabyResponseDto {
-        val babyEntity = babyRepository.findById(id)
-            .orElseThrow { IllegalStateException("Could not find baby") }
+        val persistedBaby = babyFinder.getBabyOrThrow(id)
 
-        val savedDomain = babyEntity.toDomain()
+        val savedDomain = persistedBaby.toDomain()
 
         return savedDomain.toBabyResponseDto()
 
     }
 
     fun getAllBabies(): GetAllBabyResponseDto {
-        val babyEntities = babyRepository.findAll()
+        val persistedBabies = babyRepository.findAll()
             .map { it.toDomain() }
 
-        return GetAllBabyResponseDto(babyEntities.map { it.toBabyResponseDto() })
+        return GetAllBabyResponseDto(persistedBabies.map { it.toBabyResponseDto() })
 
     }
 
     fun updateBaby(id: Long, request: UpdateBabyRequestDto): BabyResponseDto {
 
-        // check if id exists in the database
-        val babyEntity = babyRepository.findById(id)
-            .orElseThrow{ IllegalStateException("Could not find baby") }
+        val persistedBaby = babyFinder.getBabyOrThrow(id)
 
-        request.firstName?.let { babyEntity.firstName = it }
-        request.lastName?.let { babyEntity.lastName = it }
-        request.nickname?.let { babyEntity.nickname = it }
-        request.birthDate?.let { babyEntity.birthDate = it }
-        request.sex?.let { babyEntity.sex = it }
+        val baby = persistedBaby.toDomain()
 
-        babyEntity.modifiedOn = Instant.now()
+        val updatedBaby = baby.update(
+            firstName = request.firstName,
+            lastName = request.lastName,
+            nickname = request.nickname,
+            birthDate = request.birthDate,
+            sex = request.sex,
+        )
+
+        val babyEntity = updatedBaby.toEntity()
 
         val savedEntity = babyRepository.save(babyEntity)
 
@@ -86,14 +84,8 @@ class BabyService(
     }
 
     fun deleteBaby(id: Long) {
-        babyRepository.findById(id)
-            .orElseThrow{ IllegalStateException("Could not find baby") }
+        babyFinder.getBabyOrThrow(id)
 
         babyRepository.deleteById(id)
     }
-    /*
-    Capitalizes the first character of a string
-     */
-    private fun toTitleCase(name: String) = name.replaceFirstChar { it.titlecase() }
-
 }

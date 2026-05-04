@@ -23,6 +23,16 @@ data class Event(
             }
         }
 
+    fun updatePayload(payload: Map<String, Any>): Event {
+        return this.copy(
+            previousPayload = this.payload,
+            payload = payload,
+            isCorrected = true,
+            modifiedOn = Instant.now()
+        )
+
+    }
+
     private fun validateFeedType() {
         val feedingAmount = payload["feedingAmount"]
         require(feedingAmount is Int && feedingAmount > 0) {

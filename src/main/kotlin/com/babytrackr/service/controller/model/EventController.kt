@@ -1,5 +1,6 @@
 package com.babytrackr.service.controller.model
 
+import com.babytrackr.service.application.services.EventService
 import com.babytrackr.service.controller.model.request.CreateEventRequestDto
 import com.babytrackr.service.controller.model.request.UpdateEventRequestDto
 import com.babytrackr.service.controller.model.response.EventResponseDto
@@ -20,43 +21,43 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Validated
 @RequestMapping("/v1/babies/{babyId}/events")
-class EventController {
+class EventController(private val eventService: EventService) {
 
-//    @PostMapping()
-//    @ResponseStatus(HttpStatus.CREATED)
-//    fun createEvent(
-//        @PathVariable("babyId") babyId: Long,
-//        @RequestBody @Valid request: CreateEventRequestDto
-//    ): EventResponseDto {
-//        return // Call Service
-//    }
-//
-//    @GetMapping("/{eventId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    fun retrieveEvent(
-//        @PathVariable("babyId") babyId: Long,
-//        @PathVariable("eventId") eventId: Long,
-//    ): EventResponseDto {
-//        return // Call Service
-//    }
-//
-//    @GetMapping()
-//    @ResponseStatus(HttpStatus.OK)
-//    fun retrieveAllEvents(
-//        @PathVariable("babyId") babyId: Long,
-//    ): GetAllEventsResponseDto {
-//        return // Call Service
-//    }
-//
-//    @PatchMapping("{eventId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    fun updateEvent(
-//        @PathVariable("babyId") babyId: Long,
-//        @PathVariable("eventId") eventId: Long,
-//        @RequestBody @Valid request: UpdateEventRequestDto
-//    ): EventResponseDto {
-//        return // Call Service
-//    }
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createEvent(
+        @PathVariable("babyId") babyId: Long,
+        @RequestBody @Valid request: CreateEventRequestDto
+    ): EventResponseDto {
+        return eventService.createEvent(request, babyId)
+    }
+
+    @GetMapping("/{eventId}")
+    @ResponseStatus(HttpStatus.OK)
+    fun retrieveEvent(
+        @PathVariable("babyId") babyId: Long,
+        @PathVariable("eventId") eventId: Long,
+    ): EventResponseDto {
+        return eventService.getEvent(babyId, eventId)
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    fun retrieveAllEvents(
+        @PathVariable("babyId") babyId: Long,
+    ): GetAllEventsResponseDto {
+        return eventService.getEvents(babyId)
+    }
+
+    @PatchMapping("{eventId}")
+    @ResponseStatus(HttpStatus.OK)
+    fun updateEvent(
+        @PathVariable("babyId") babyId: Long,
+        @PathVariable("eventId") eventId: Long,
+        @RequestBody @Valid request: UpdateEventRequestDto
+    ): EventResponseDto {
+        return eventService.updateEvent(babyId, eventId, request)
+    }
 
     @DeleteMapping("{eventId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -64,6 +65,8 @@ class EventController {
         @PathVariable("babyId") babyId: Long,
         @PathVariable("eventId") eventId: Long,
     ) {
+        return eventService.deleteEvent(babyId, eventId)
+
     }
 }
 
