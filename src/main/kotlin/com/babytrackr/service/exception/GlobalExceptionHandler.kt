@@ -12,13 +12,14 @@ class GlobalExceptionHandler {
     // handles all custom exceptions
     @ExceptionHandler(ApiException::class)
     fun handleApiException(
-        ex: NotFoundException, //what is this?
+        ex: ApiException,
     ): ResponseEntity<ApiError> {
-        return buildError(
+        val response = buildError(
             status = ex.status,
             code = ex.code,
             message = ex.message,
         )
+        return ResponseEntity(response, ex.status)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
@@ -27,35 +28,39 @@ class GlobalExceptionHandler {
     ): ResponseEntity<ApiError> {
         val message = ex.bindingResult.fieldErrors
             .joinToString(", ") { "${it.field}: ${it.defaultMessage}" }
-        return buildError(
-            HttpStatus.BAD_REQUEST,
+
+        val status = HttpStatus.BAD_REQUEST
+        val response =  buildError(
+            status,
             ErrorCode.VALIDATION_ERROR,
             message,
         )
+        return ResponseEntity(response, status)
     }
 
     @ExceptionHandler(Exception::class)
     fun handleGeneric(
         ex: Exception,
     ): ResponseEntity<ApiError> {
-        return buildError(
-            HttpStatus.INTERNAL_SERVER_ERROR,
+        val status = HttpStatus.INTERNAL_SERVER_ERROR
+        val response = buildError(
+            status,
             ErrorCode.INTERNAL_ERROR,
             ex.message,
         )
+        return ResponseEntity(response, status)
     }
 
     private fun buildError(
         status: HttpStatus,
         code: ErrorCode,
         message: String?,
-    ): ResponseEntity<ApiError> {
-        val error = ApiError(
+    ): ApiError {
+        return ApiError(
             status = status.value(),
             error = status.reasonPhrase,
             code = code,
             message = message,
         )
-        return ResponseEntity.status(status).body(error)
     }
 }
