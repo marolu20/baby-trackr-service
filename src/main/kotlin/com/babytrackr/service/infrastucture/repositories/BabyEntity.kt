@@ -3,6 +3,8 @@ package com.babytrackr.service.infrastucture.repositories
 import com.babytrackr.service.domain.enums.Sex
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -16,12 +18,13 @@ import java.time.LocalDate
 @Table(name = "babies")
 class BabyEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
     var firstName: String,
     var lastName: String,
     var nickname: String? = null,
     var birthDate: LocalDate? = null,
+    @Enumerated(EnumType.STRING)
     var sex: Sex? = null,
     var userId: String? = null,
     var createdOn: Instant,

@@ -1,0 +1,90 @@
+==============
+Baby Controller
+==============
+
+Create Baby
+==============
+curl -i -X POST http://localhost:8080/v1/babies \
+-H "Content-Type: application/json" \
+-d '{
+   "firstName":"joe",
+   "lastName":"doe",
+   "nickname":"jo",
+   "birthDate":"1990-04-30",
+   "sex": "FEMALE",
+   "userId":"1"
+}'
+
+Get Baby
+==============
+curl -i http://localhost:8080/v1/babies/1
+
+
+Get Babies
+==============
+curl -i http://localhost:8080/v1/babies
+
+Update Baby
+==============
+curl -X PATCH http://localhost:8080/v1/babies/1 \
+-H "Content-Type: application/json" \
+-d '{"firstName": "joseph"}'
+
+Delete Baby
+==============
+curl -i -X DELETE http://localhost:8080/v1/babies/1
+
+
+==============
+Event Controller
+==============
+
+Create Event
+==============
+curl -i -X POST http://localhost:8080/v1/babies/1/events \
+-H "Content-Type: application/json" \
+-d '{
+   "eventType":"FEED",
+   "payload": {
+    "feedingAmount": 5
+   }
+}'
+curl -i -X POST http://localhost:8080/v1/babies/1/events \
+-H "Content-Type: application/json" \
+-d '{
+   "eventType":"SLEEP",
+   "payload": {
+    "sleepDurationMin": 60
+   }
+}'
+
+curl -i -X POST http://localhost:8080/v1/babies/1/events \
+-H "Content-Type: application/json" \
+-d '{
+   "eventType":"DIAPER",
+   "payload": {
+    "diaperType": "LIQUID"
+   }
+}'
+
+Get Events
+==============
+curl -i http://localhost:8080/v1/babies/1/events
+
+Get Event
+==============
+curl -i http://localhost:8080/v1/babies/1/events/1
+
+Update Event
+==============
+curl -X PATCH http://localhost:8080/v1/babies/1/events/1 \
+-H "Content-Type: application/json" \
+-d '{
+   "payload": {
+    "feedingAmount": 7
+   }
+}'
+
+Delete Event
+==============
+curl -i -X DELETE http://localhost:8080/v1/babies/1/events/2

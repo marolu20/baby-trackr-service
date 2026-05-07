@@ -1,5 +1,6 @@
 package com.babytrackr.service.controller.model
 
+import com.babytrackr.service.application.services.EventService
 import com.babytrackr.service.controller.model.request.CreateEventRequestDto
 import com.babytrackr.service.controller.model.request.UpdateEventRequestDto
 import com.babytrackr.service.controller.model.response.EventResponseDto
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Validated
 @RequestMapping("/v1/babies/{babyId}/events")
-class EventController {
+class EventController(private val eventService: EventService) {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,7 +29,7 @@ class EventController {
         @PathVariable("babyId") babyId: Long,
         @RequestBody @Valid request: CreateEventRequestDto
     ): EventResponseDto {
-        return // Call Service
+        return eventService.createEvent(request, babyId)
     }
 
     @GetMapping("/{eventId}")
@@ -37,7 +38,7 @@ class EventController {
         @PathVariable("babyId") babyId: Long,
         @PathVariable("eventId") eventId: Long,
     ): EventResponseDto {
-        return // Call Service
+        return eventService.getEvent(babyId, eventId)
     }
 
     @GetMapping()
@@ -45,7 +46,7 @@ class EventController {
     fun retrieveAllEvents(
         @PathVariable("babyId") babyId: Long,
     ): GetAllEventsResponseDto {
-        return // Call Service
+        return eventService.getEvents(babyId)
     }
 
     @PatchMapping("{eventId}")
@@ -55,7 +56,7 @@ class EventController {
         @PathVariable("eventId") eventId: Long,
         @RequestBody @Valid request: UpdateEventRequestDto
     ): EventResponseDto {
-        return // Call Service
+        return eventService.updateEvent(babyId, eventId, request)
     }
 
     @DeleteMapping("{eventId}")
@@ -64,6 +65,8 @@ class EventController {
         @PathVariable("babyId") babyId: Long,
         @PathVariable("eventId") eventId: Long,
     ) {
+        return eventService.deleteEvent(babyId, eventId)
+
     }
 }
 
