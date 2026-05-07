@@ -4,48 +4,64 @@ import com.babytrackr.service.controller.model.response.EventResponseDto
 import com.babytrackr.service.domain.model.Event
 import com.babytrackr.service.infrastucture.repositories.BabyEntity
 import com.babytrackr.service.infrastucture.repositories.EventEntity
+import org.springframework.stereotype.Component
 
-//Domain to Entity
-fun Event.toEntity(baby: BabyEntity): EventEntity {
-    return EventEntity(
-        id = id,
-        eventType = eventType,
-        payload = payload,
-        isCorrected = isCorrected,
-        previousPayload = previousPayload,
-        createdOn = createdOn,
-        modifiedOn = modifiedOn,
-        version = version,
-        baby = baby
-    )
-}
+@Component
+class EventMapper(
+    private val payloadMapper: EventPayloadMapper,
+) {
 
-// Entity to Domain
-fun EventEntity.toDomain(): Event {
-    return Event(
-        id = id,
-        babyId = baby.id!!,
-        eventType = eventType,
-        payload = payload,
-        version = version,
-        isCorrected = isCorrected,
-        previousPayload = previousPayload,
-        createdOn = createdOn,
-        modifiedOn = modifiedOn
-    )
-}
+    //Domain to Entity
+    fun toEntity(
+        baby: BabyEntity,
+        event: Event
+    ): EventEntity {
+        return EventEntity(
+            id = event.id,
+            eventType = event.eventType,
+            payload = payloadMapper.toJson(event.payload),
+            isCorrected = event.isCorrected,
+            previousPayload = event.previousPayload?.let {
+                payloadMapper.toJson(it)
+            },
+            createdOn = event.createdOn,
+            modifiedOn = event.modifiedOn,
+            version = event.version,
+            baby = baby
+        )
+    }
 
-//Domain to Response DTO
-fun Event.toEventResponseDto(): EventResponseDto {
-    return EventResponseDto(
-        id = id ?: throw IllegalStateException("Id cannot be null"),
-        babyId = babyId,
-        eventType = eventType,
-        payload = payload,
-        isCorrected = false,
-        previousPayload = null,
-        version = "v1",
-        createdOn = createdOn,
-        modifiedOn = modifiedOn
-    )
+    // Entity to Domain
+    fun toDomain(entity: EventEntity): Event {
+        return Event(
+            id = entity.id,
+            babyId = entity.baby.id!!,
+            eventType = entity.eventType,
+            payload = payloadMapper.fromJson(entity.eventType, entity.payload),
+            version = entity.version,
+            isCorrected = entity.isCorrected,
+            previousPayload = entity.previousPayload?.let {
+                payloadMapper.fromJson(entity.eventType, it)
+            },
+            createdOn = entity.createdOn,
+            modifiedOn = entity.modifiedOn
+        )
+    }
+
+    //Domain to Response DTO
+    fun toEventResponseDto(event: Event): EventResponseDto {
+        return EventResponseDto(
+            id = event.id!!,
+            babyId = event.babyId,
+            eventType = event.eventType,
+            payload = payloadMapper.toMap(event.payload),
+            isCorrected = event.isCorrected,
+            previousPayload = event.previousPayload?.let {
+                payloadMapper.toMap(it)
+            },
+            version = "v1",
+            createdOn = event.createdOn,
+            modifiedOn = event.modifiedOn
+        )
+    }
 }

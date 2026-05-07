@@ -1,6 +1,7 @@
 package com.babytrackr.service.infrastucture.repositories
 
 import com.babytrackr.service.domain.enums.EventType
+import com.babytrackr.service.domain.model.EventPayload
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -28,11 +29,11 @@ class EventEntity(
     var eventType: EventType,
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    var payload: Map<String, Any>, // Map<String, Any>,
+    var payload: String,
     var isCorrected: Boolean = false,
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    var previousPayload: Map<String, Any>? = null,
+    var previousPayload: String? = null,
     var createdOn: Instant,
     var modifiedOn: Instant,
     @Column(name="version", nullable = false)
