@@ -4,9 +4,9 @@ spring:
       fail-on-unknown-properties: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/baby_trackr
-    username: postgres
-    password: "butterfly08$"
+    url: jdbc:postgresql://localhost:5433/baby_trackr
+    username: ${DB_MAIN_USERNAME}
+    password: ${DB_MAIN_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update #automatically creates and updates tables based on your Kotlin entities

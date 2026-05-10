@@ -1,0 +1,14 @@
+services:
+  babytracker-db:
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${DB_MAIN_NAME}
+      POSTGRES_USER: ${DB_MAIN_USERNAME}
+      POSTGRES_PASSWORD: ${DB_MAIN_PASSWORD}
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
