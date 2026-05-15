@@ -15,12 +15,3 @@ spring:
         type:
           json_format_mapper: jackson
     show-sql: true
-#  services:
-#    postgres:
-#      image: postgres
-#      environment:
-#        POSTGRES_DB: baby_trackr
-#        POSTGRES_USER: postgres
-#        POSTGRES_PASSWORD: "butterfly08$"
-#      postgres:
-#        "5432:5432" #5432 (your computer) : 5432 (inside container)

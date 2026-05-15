@@ -57,7 +57,7 @@ class EventService(
         return eventMapper.toEventResponseDto(savedDomain)
     }
 
-    fun getEvents(babyId: Long): GetAllEventsResponseDto {
+    fun getAllEvents(babyId: Long): GetAllEventsResponseDto {
 
         babyFinder.getBabyOrThrow(babyId)
 
