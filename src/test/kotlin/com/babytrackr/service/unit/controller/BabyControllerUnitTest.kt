@@ -10,8 +10,8 @@ import com.babytrackr.service.fixtures.buildBabyRequestDto
 import com.babytrackr.service.fixtures.buildBabyResponseDto
 import com.babytrackr.service.fixtures.buildGetAllBabiesResponseDto
 import com.babytrackr.service.fixtures.buildUpdateBabyRequestDto
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
-import kotlin.test.Test
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.junit.jupiter.api.Test
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.just
@@ -296,4 +296,3 @@ class BabyControllerUnitTest(
         verify(exactly = 1) {babyServiceMock.deleteBaby(babyId)}
     }
 }
-

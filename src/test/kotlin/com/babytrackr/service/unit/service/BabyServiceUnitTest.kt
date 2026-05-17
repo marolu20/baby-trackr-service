@@ -20,7 +20,7 @@
     import io.mockk.verify
     import org.junit.jupiter.api.assertThrows
     import java.time.LocalDate
-    import kotlin.test.Test
+    import org.junit.jupiter.api.Test
 
     @ExtendWith(MockKExtension::class)
     class BabyServiceUnitTest {

@@ -4,7 +4,7 @@ import com.babytrackr.service.domain.enums.DiaperType
 import com.babytrackr.service.domain.enums.EventType
 import com.babytrackr.service.domain.model.EventPayload
 import org.springframework.stereotype.Component
-import tools.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 
 @Component
 class EventPayloadMapper(
