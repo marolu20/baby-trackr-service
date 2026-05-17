@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class EventFinder(
     private val eventRepository: EventRepository,
 ) {
-    fun getEventOrThrow(eventId: Long, babyId: Long): EventEntity {
+    fun getEventOrThrow(babyId: Long, eventId: Long): EventEntity {
         return eventRepository.findByIdAndBabyId(babyId, eventId)
             ?: throw NotFoundException(
                 ErrorCode.EVENT_NOT_FOUND,

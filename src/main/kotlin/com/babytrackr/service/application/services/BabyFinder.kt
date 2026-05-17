@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class BabyFinder(
     private val babyRepository: BabyRepository,
 ) {
-    fun getBabyOrThrow(babyId: Long): BabyEntity { // should this live in both services?
+    fun getBabyOrThrow(babyId: Long): BabyEntity {
         return babyRepository.findById(babyId)
             .orElseThrow {
                 throw NotFoundException(

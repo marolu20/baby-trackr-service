@@ -131,7 +131,7 @@ class EventControllerUnitTest(
         val response = buildEventResponseDto(
             eventId,
             babyId,
-            eventPayload = mapOf("feedingAmount" to 10),
+            payload = mapOf("feedingAmount" to 10),
             isCorrected = true,
             previousPayload = mapOf("feedingAmount" to 5)
         )
