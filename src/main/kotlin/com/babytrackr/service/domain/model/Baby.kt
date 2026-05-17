@@ -27,9 +27,13 @@ data class Baby(
        get() = ChronoUnit.YEARS.between(birthDate, LocalDate.now())
 
    init {
-      require(!birthDate.isAfter(LocalDate.now())) {
-          "Birthdate cannot be in the future"
-      }
+       /*
+        Validates the first and last name to ensure the user does not pass in blank fields
+        Also validates the birthdate to ensure the user does not pass in a date that is in the future.
+       */
+       require(firstName.isNotBlank()) { "First name cannot be blank" }
+       require(lastName.isNotBlank()) { "Last name cannot be blank" }
+       require(!birthDate.isAfter(LocalDate.now())) { "Birthdate cannot be in the future" }
    }
 
     fun update(
@@ -47,19 +51,6 @@ data class Baby(
             sex = sex ?: this.sex,
             modifiedOn = Instant.now()
         )
-
-        validate(updated)
-
         return updated
-    }
-
-    /*
-    Validates the first and last name to ensure the user does not pass in blank fields
-    Also validates the birthdate to ensure the user does not pass in a date that is in the future.
-     */
-    fun validate(baby: Baby) {
-        require(baby.firstName.isNotBlank()) { "First name cannot be blank" }
-        require(baby.lastName.isNotBlank()) { "Last name cannot be blank" }
-        require(!baby.birthDate.isAfter(LocalDate.now())) { "Birthdate cannot be in the future" }
     }
 }

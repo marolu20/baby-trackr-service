@@ -46,7 +46,7 @@ class EventController(private val eventService: EventService) {
     fun retrieveAllEvents(
         @PathVariable("babyId") babyId: Long,
     ): GetAllEventsResponseDto {
-        return eventService.getEvents(babyId)
+        return eventService.getAllEvents(babyId)
     }
 
     @PatchMapping("{eventId}")
@@ -66,7 +66,6 @@ class EventController(private val eventService: EventService) {
         @PathVariable("eventId") eventId: Long,
     ) {
         return eventService.deleteEvent(babyId, eventId)
-
     }
 }
 

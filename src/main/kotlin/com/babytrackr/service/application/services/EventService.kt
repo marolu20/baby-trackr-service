@@ -57,7 +57,7 @@ class EventService(
         return eventMapper.toEventResponseDto(savedDomain)
     }
 
-    fun getEvents(babyId: Long): GetAllEventsResponseDto {
+    fun getAllEvents(babyId: Long): GetAllEventsResponseDto {
 
         babyFinder.getBabyOrThrow(babyId)
 
@@ -87,15 +87,15 @@ class EventService(
     }
 
 
-    fun deleteEvent(eventId: Long, babyId: Long) {
+    fun deleteEvent(babyId: Long, eventId: Long) {
 
-        val event = eventFinder.getEventOrThrow(eventId,babyId)
+        val event = eventFinder.getEventOrThrow(babyId, eventId)
         eventRepository.delete(event)
     }
 
     fun mapPayload(type: EventType, payload: Map<String, Any>): EventPayload {
         return when (type) {
-            EventType.FEED  -> FeedPayload(
+            EventType.FEED -> FeedPayload(
                 feedingAmount = (payload["feedingAmount"] as? Int)
                     ?: throw IllegalArgumentException("feedingAmount must be an Int"),
             )

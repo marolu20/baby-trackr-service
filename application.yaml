@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: "optional:file:.env[.properties]" # loads the .env file
   jackson:
     deserialization:
       fail-on-unknown-properties: true
@@ -8,19 +10,10 @@ spring:
     username: ${DB_MAIN_USERNAME}
     password: ${DB_MAIN_PASSWORD}
   jpa:
+    show-sql: true
     hibernate:
-      ddl-auto: update #automatically creates and updates tables based on your Kotlin entities
+      ddl-auto: update # automatically creates and updates tables based on your Kotlin entities
     properties:
       hibernate:
         type:
           json_format_mapper: jackson
-    show-sql: true
-#  services:
-#    postgres:
-#      image: postgres
-#      environment:
-#        POSTGRES_DB: baby_trackr
-#        POSTGRES_USER: postgres
-#        POSTGRES_PASSWORD: "butterfly08$"
-#      postgres:
-#        "5432:5432" #5432 (your computer) : 5432 (inside container)
