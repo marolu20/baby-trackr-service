@@ -25,16 +25,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-//    implementation("org.springframework.boot:spring-boot-starter-webmvc") // removed this
-//    implementation("org.springframework.boot:spring-boot-starter-json") // removed this
-//    implementation("tools.jackson.module:jackson-module-kotlin") // im going to remove this //    testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test") // removed this
-//    testImplementation("org.springframework.boot:spring-boot-starter-validation-test") // removed this
-//    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test") // removed this
-//    implementation("org.hibernate.orm:hibernate-core") // removed this
-
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    implementation("org.springframework.kafka:spring-kafka")
+
+    compileOnly("org.jetbrains:annotations:26.0.1")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -44,6 +41,9 @@ dependencies {
     testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation ("io.mockk:mockk:1.13.12")
+
+    testImplementation("org.springframework.kafka:spring-kafka-test")
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
