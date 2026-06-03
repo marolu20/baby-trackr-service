@@ -1,10 +1,12 @@
 package com.babytrackr.service.integration
 
-import com.babytrackr.service.application.services.BabyService
 import com.babytrackr.service.fixtures.buildBabyRequestDto
 import com.babytrackr.service.fixtures.buildEventRequestDto
+import com.babytrackr.service.infrastucture.messaging.producer.KafkaProducerService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jayway.jsonpath.JsonPath
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.justRun
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,13 +22,25 @@ import org.springframework.test.web.servlet.post
 @AutoConfigureMockMvc
 @Transactional
 class EventIntegrationTest(
-    @Autowired private val mockMvc: MockMvc
+    @Autowired
+    private val mockMvc: MockMvc
 ) {
 
     private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
 
+    @MockkBean
+    lateinit var kafkaProducerService: KafkaProducerService
+
+//    @MockkBean
+//    lateinit var kafkaProperties: KafkaProperties
+
+
     @Test
     fun `should create event and persist in database`() {
+
+        justRun {
+            kafkaProducerService.send(any(), any(), any())
+        }
 
         // create a new baby using the controller api
         val babyRequest = buildBabyRequestDto()

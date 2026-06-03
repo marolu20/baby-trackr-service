@@ -13,6 +13,8 @@ import com.babytrackr.service.fixtures.buildEventEntity
 import com.babytrackr.service.fixtures.buildEventRequestDto
 import com.babytrackr.service.fixtures.buildEventResponseDto
 import com.babytrackr.service.fixtures.buildUpdateEventRequestDto
+import com.babytrackr.service.infrastucture.config.properties.KafkaProperties
+import com.babytrackr.service.infrastucture.messaging.producer.KafkaProducerService
 import com.babytrackr.service.infrastucture.repositories.EventRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -21,6 +23,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
+import io.mockk.justRun
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -44,6 +47,11 @@ class EventServiceUnitTest {
         @MockK
         lateinit var eventMapper: EventMapper
 
+        @MockK
+        lateinit var kafkaProducerService: KafkaProducerService
+
+        @MockK
+        lateinit var kafkaProperties: KafkaProperties
 
         @Test
         fun `should create a event and return response`() {
@@ -58,6 +66,11 @@ class EventServiceUnitTest {
             val domainEvent = buildEvent(eventId, babyId)
             val expectedResponse = buildEventResponseDto(eventId, babyId)
 
+            val topics =
+                KafkaProperties.Topics(
+                    babyEvents = "baby-events"
+                )
+
             // stub the dependencies
             every { eventMapper.toEntity(any(), any()) } returns savedEventEntity
 
@@ -68,6 +81,12 @@ class EventServiceUnitTest {
             every { eventRepository.save(any()) } returns savedEventEntity
 
             every { eventMapper.toEventResponseDto(any()) } returns expectedResponse
+
+            every { kafkaProperties.topics } returns topics
+
+            justRun {
+                kafkaProducerService.send(any(), any(), any())
+            }
 
             // when
             val result = eventService.createEvent(request, 1L)
