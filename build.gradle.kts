@@ -62,3 +62,12 @@ allOpen {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+kotlin {
+    sourceSets {
+        main {
+            kotlin.setSrcDirs(listOf("src/main/kotlin"))
+        }
+    }
+}
+
