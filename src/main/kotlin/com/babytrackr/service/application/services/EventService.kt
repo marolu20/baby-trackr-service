@@ -130,7 +130,7 @@ class EventService(
     private fun sendMessageToTopic(babyId: Long, eventId: Long, persistedEvent: EventEntity) {
         val currentDate = Instant.now()
 
-        kafkaProducerService.send( //how to enable retry?
+        kafkaProducerService.send(
             kafkaProperties.topics.babyEvents,
             eventId,
             EventMessage(
