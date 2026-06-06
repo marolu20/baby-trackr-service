@@ -31,10 +31,6 @@ class EventIntegrationTest(
     @MockkBean
     lateinit var kafkaProducerService: KafkaProducerService
 
-//    @MockkBean
-//    lateinit var kafkaProperties: KafkaProperties
-
-
     @Test
     fun `should create event and persist in database`() {
 

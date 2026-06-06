@@ -13,6 +13,7 @@ import com.babytrackr.service.domain.model.EventPayload
 import com.babytrackr.service.infrastucture.config.properties.KafkaProperties
 import com.babytrackr.service.infrastucture.messaging.producer.KafkaProducerService
 import com.babytrackr.service.infrastucture.model.EventMessage
+import com.babytrackr.service.infrastucture.repositories.EventEntity
 import com.babytrackr.service.infrastucture.repositories.EventRepository
 import org.springframework.stereotype.Service
 import java.time.Instant
@@ -54,18 +55,7 @@ class EventService(
             "The persisted eventId should never be null"
         }
 
-        kafkaProducerService.send( //how to enable retry?
-            kafkaProperties.topics.babyEvents,
-            eventId,
-            EventMessage(
-                eventId = eventId,
-                babyId = babyId,
-                userId = null,
-                eventType = persistedEvent.eventType,
-                payload = persistedEvent.payload,
-                createdAt = currentDate
-            )
-        )
+        sendMessageToTopic(babyId, eventId, persistedEvent)
 
         return eventMapper.toEventResponseDto(savedDomain)
     }
@@ -105,6 +95,8 @@ class EventService(
 
         val savedDomain = eventMapper.toDomain(savedEntity)
 
+        sendMessageToTopic(babyId, eventId, persistedEvent)
+
         return eventMapper.toEventResponseDto(savedDomain)
     }
 
@@ -133,5 +125,22 @@ class EventService(
                 } ?: throw IllegalArgumentException("Invalid diaperType")
             )
         }
+    }
+
+    private fun sendMessageToTopic(babyId: Long, eventId: Long, persistedEvent: EventEntity) {
+        val currentDate = Instant.now()
+
+        kafkaProducerService.send( //how to enable retry?
+            kafkaProperties.topics.babyEvents,
+            eventId,
+            EventMessage(
+                eventId = eventId,
+                babyId = babyId,
+                userId = null,
+                eventType = persistedEvent.eventType,
+                payload = persistedEvent.payload,
+                createdAt = currentDate
+            )
+        )
     }
 }
