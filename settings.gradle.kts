@@ -1,1 +1,1 @@
-rootProject.name = "babytrackr-service"
+rootProject.name = "BabyTrackr"

@@ -11,7 +11,7 @@ class EventFinder(
     private val eventRepository: EventRepository,
 ) {
     fun getEventOrThrow(babyId: Long, eventId: Long): EventEntity {
-        return eventRepository.findByIdAndBabyId(babyId, eventId)
+        return eventRepository.findByIdAndBabyId(eventId, babyId)
             ?: throw NotFoundException(
                 ErrorCode.EVENT_NOT_FOUND,
                 "Could not find event=${eventId} with babyid=$babyId"
