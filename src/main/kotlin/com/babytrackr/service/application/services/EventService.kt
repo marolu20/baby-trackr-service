@@ -7,6 +7,7 @@ import com.babytrackr.service.controller.model.response.EventResponseDto
 import com.babytrackr.service.controller.model.response.GetAllEventsResponseDto
 import com.babytrackr.service.domain.enums.DiaperType
 import com.babytrackr.service.domain.enums.EventType
+import com.babytrackr.service.domain.enums.OperationType
 import com.babytrackr.service.domain.model.Event
 import com.babytrackr.service.domain.model.EventPayload.*
 import com.babytrackr.service.domain.model.EventPayload
@@ -55,7 +56,7 @@ class EventService(
             "The persisted eventId should never be null"
         }
 
-        sendMessageToTopic(babyId, eventId, persistedEvent)
+        sendMessageToTopic(babyId, eventId, persistedEvent, OperationType.CREATE)
 
         return eventMapper.toEventResponseDto(savedDomain)
     }
@@ -83,7 +84,7 @@ class EventService(
 
         val persistedEvent = eventFinder.getEventOrThrow(babyId, eventId)
 
-         val mappedPayload = mapPayload(persistedEvent.eventType, request.payload)
+        val mappedPayload = mapPayload(persistedEvent.eventType, request.payload)
 
         val event = eventMapper.toDomain(persistedEvent)
 
@@ -95,8 +96,7 @@ class EventService(
 
         val savedDomain = eventMapper.toDomain(savedEntity)
 
-        sendMessageToTopic(babyId, eventId, persistedEvent)
-
+        sendMessageToTopic(babyId, eventId, persistedEvent, OperationType.UPDATE)
         return eventMapper.toEventResponseDto(savedDomain)
     }
 
@@ -104,6 +104,8 @@ class EventService(
     fun deleteEvent(babyId: Long, eventId: Long) {
 
         val event = eventFinder.getEventOrThrow(babyId, eventId)
+
+        sendMessageToTopic(babyId, eventId, event, OperationType.DELETE)
         eventRepository.delete(event)
     }
 
@@ -127,7 +129,12 @@ class EventService(
         }
     }
 
-    private fun sendMessageToTopic(babyId: Long, eventId: Long, persistedEvent: EventEntity) {
+    private fun sendMessageToTopic(
+        babyId: Long,
+        eventId: Long,
+        persistedEvent: EventEntity,
+        operationType: OperationType
+    ) {
         val currentDate = Instant.now()
 
         kafkaProducerService.send(
@@ -138,6 +145,7 @@ class EventService(
                 babyId = babyId,
                 userId = null,
                 eventType = persistedEvent.eventType,
+                operationType = operationType,
                 payload = persistedEvent.payload,
                 createdAt = currentDate
             )
