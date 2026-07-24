@@ -14,7 +14,7 @@ data class BabyResponseDto(
     val ageMonths: Int,
     val sex: Sex,
     val ageYears: Int,
-    val userId: String? = null,
+    val userId: Long,
     val createdOn: Instant,
     val modifiedOn: Instant
 )

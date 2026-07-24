@@ -13,7 +13,7 @@ data class Baby(
     val nickname: String? = null,
     val birthDate: LocalDate,
     val sex: Sex? = null,
-    val userId: String? = null,
+    val userId: Long,
     val createdOn: Instant,
     val modifiedOn: Instant
 ) {
