@@ -4,5 +4,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface BabyRepository: CrudRepository<BabyEntity, Long> {}
+interface BabyRepository: CrudRepository<BabyEntity, Long> {
+    fun findByUserId(userId: Long): List<BabyEntity>
+}
 

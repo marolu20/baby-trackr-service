@@ -53,8 +53,8 @@ class BabyService(
 
     }
 
-    fun getAllBabies(): GetAllBabyResponseDto {
-        val persistedBabies = babyRepository.findAll()
+    fun getAllBabies(userId: Long): GetAllBabyResponseDto {
+        val persistedBabies = babyRepository.findByUserId(userId)
             .map { it.toDomain() }
 
         return GetAllBabyResponseDto(persistedBabies.map { it.toBabyResponseDto() })
