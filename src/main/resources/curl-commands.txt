@@ -4,7 +4,7 @@ Baby Controller
 
 Create Baby
 ==============
-curl -i -X POST http://localhost:8080/v1/babies \
+curl -i -X POST http://localhost:8080/v1/users/1/babies \
 -H "Content-Type: application/json" \
 -d '{
    "firstName":"joe",
@@ -12,27 +12,27 @@ curl -i -X POST http://localhost:8080/v1/babies \
    "nickname":"jo",
    "birthDate":"1990-04-30",
    "sex": "FEMALE",
-   "userId":"1"
+   "userId":1
 }'
 
 Get Baby
 ==============
-curl -i http://localhost:8080/v1/babies/1
+curl -i http://localhost:8080/v1/users/1/babies/1
 
 
 Get Babies
 ==============
-curl -i http://localhost:8080/v1/babies
+curl -i http://localhost:8080/v1/users/1/babies
 
 Update Baby
 ==============
-curl -X PATCH http://localhost:8080/v1/babies/1 \
+curl -X PATCH http://localhost:8080/v1/users/1/babies/1 \
 -H "Content-Type: application/json" \
 -d '{"firstName": "joseph"}'
 
 Delete Baby
 ==============
-curl -i -X DELETE http://localhost:8080/v1/babies/1
+curl -i -X DELETE http://localhost:8080/v1/users/1/babies/1
 
 
 ==============
@@ -63,7 +63,7 @@ curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -d '{
    "eventType":"DIAPER",
    "payload": {
-    "diaperType": "LIQUID"
+    "diaperType": "WET"
    }
 }'
 
