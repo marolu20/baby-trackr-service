@@ -26,7 +26,7 @@ class BabyEntity(
     var birthDate: LocalDate? = null,
     @Enumerated(EnumType.STRING)
     var sex: Sex? = null,
-    var userId: String? = null,
+    var userId: Long,
     var createdOn: Instant,
     var modifiedOn: Instant,
     @OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])

@@ -29,7 +29,7 @@ fun BabyEntity.toDomain(): Baby {
         birthDate = birthDate ?: throw IllegalStateException("birthDate cannot be null"),
         sex = sex,
         userId = userId,
-        createdOn = modifiedOn,
+        createdOn = createdOn,
         modifiedOn = modifiedOn
     )
 }

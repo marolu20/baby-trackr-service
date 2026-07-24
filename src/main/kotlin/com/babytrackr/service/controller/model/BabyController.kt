@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @Validated
-@RequestMapping("/v1/babies")
+@RequestMapping("/v1/users/{userId}")
 class BabyController(val babyService: BabyService) {
 
-    @PostMapping()
+    @PostMapping("/babies")
     @ResponseStatus(HttpStatus.CREATED)
     fun createBaby(
         @RequestBody @Valid request: CreateBabyRequestDto
@@ -31,19 +31,21 @@ class BabyController(val babyService: BabyService) {
         return babyService.createBaby(request)
     }
 
-    @GetMapping("/{babyId}")
+    @GetMapping("/babies/{babyId}")
     @ResponseStatus(HttpStatus.OK)
     fun retrieveBaby(@PathVariable("babyId") babyId: Long): BabyResponseDto {
         return babyService.getBaby(babyId)
     }
 
-    @GetMapping()
+    @GetMapping("/babies")
     @ResponseStatus(HttpStatus.OK)
-    fun retrieveAllBabies(): GetAllBabyResponseDto {
-        return babyService.getAllBabies()
+    fun retrieveAllBabies(
+        @PathVariable("userId") userId: Long,
+    ): GetAllBabyResponseDto {
+        return babyService.getAllBabies(userId)
     }
 
-    @PatchMapping("/{babyId}")
+    @PatchMapping("/babies/{babyId}")
     @ResponseStatus(HttpStatus.OK)
     fun updateBaby(
         @PathVariable("babyId") babyId: Long,
@@ -52,7 +54,7 @@ class BabyController(val babyService: BabyService) {
         return babyService.updateBaby(babyId, request)
     }
 
-    @DeleteMapping("/{babyId}")
+    @DeleteMapping("/babies/{babyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteBaby(@PathVariable("babyId") babyId: Long) {
         babyService.deleteBaby(babyId)
