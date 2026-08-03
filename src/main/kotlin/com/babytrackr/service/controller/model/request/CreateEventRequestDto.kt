@@ -8,5 +8,5 @@ data class CreateEventRequestDto(
     @field:NotNull("eventType is required")
     val eventType: EventType,
     @field:NotEmpty("event payload is required")
-    val payload: Map<String, Any>
+    val payload: Map<String, Any?>
 )

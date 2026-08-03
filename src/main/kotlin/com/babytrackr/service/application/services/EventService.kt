@@ -109,22 +109,41 @@ class EventService(
         eventRepository.delete(event)
     }
 
-    fun mapPayload(type: EventType, payload: Map<String, Any>): EventPayload {
+    private fun mapPayload(type: EventType, payload: Map<String, Any?>): EventPayload {
         return when (type) {
             EventType.FEED -> FeedPayload(
                 feedingAmount = (payload["feedingAmount"] as? Int)
                     ?: throw IllegalArgumentException("feedingAmount must be an Int"),
+                notes = (payload["notes"] as? String),
+                eventTime = Instant.parse(
+                    payload["eventTime"] as? String
+                    ?: throw IllegalArgumentException("eventTime is required")
+                )
             )
 
             EventType.SLEEP -> SleepPayload(
                 sleepDurationMin = (payload["sleepDurationMin"] as? Int)
                 ?: throw IllegalArgumentException("sleepDurationMin must be an Int"),
+                notes = (payload["notes"] as? String),
+                startTime = Instant.parse(
+                    payload["startTime"] as? String
+                        ?: throw IllegalArgumentException("startTime is required")
+                ),
+                endTime = Instant.parse(
+                    payload["endTime"] as? String
+                        ?: throw IllegalArgumentException("endTime is required")
+                )
             )
 
             EventType.DIAPER -> DiaperPayload(
                 diaperType = DiaperType.entries.find {
                     it.name.equals(payload["diaperType"] as? String, ignoreCase = true)
-                } ?: throw IllegalArgumentException("Invalid diaperType")
+                } ?: throw IllegalArgumentException("Invalid diaperType"),
+                notes = (payload["notes"] as? String),
+                Instant.parse(
+                    payload["eventTime"] as? String
+                        ?: throw IllegalArgumentException("eventTime is required")
+                )
             )
         }
     }
