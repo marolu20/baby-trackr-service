@@ -1,11 +1,14 @@
 package com.babytrackr.service.domain.model
 
 import com.babytrackr.service.domain.enums.DiaperType
+import java.time.Instant
 
 sealed class EventPayload {
 
     data class FeedPayload(
-        val feedingAmount: Int
+        val feedingAmount: Int,
+        val notes: String? = null,
+        val eventTime: Instant,
     ): EventPayload() {
 
         init {
@@ -16,7 +19,10 @@ sealed class EventPayload {
     }
 
     data class SleepPayload(
-        val sleepDurationMin: Int
+        val sleepDurationMin: Int,
+        val notes: String? = null,
+        val startTime: Instant,
+        val endTime: Instant
     ): EventPayload() {
 
         init {
@@ -26,6 +32,8 @@ sealed class EventPayload {
     }
 
     data class DiaperPayload(
-        val diaperType: DiaperType
+        val diaperType: DiaperType,
+        val notes: String? = null,
+        val eventTime: Instant,
     ): EventPayload()
 }

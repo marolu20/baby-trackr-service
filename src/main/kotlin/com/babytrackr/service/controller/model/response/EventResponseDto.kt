@@ -7,9 +7,9 @@ data class EventResponseDto(
     val id: Long,
     val babyId: Long,
     val eventType: EventType,
-    val payload: Map<String, Any>,
+    val payload: Map<String, Any?>,
     val isCorrected: Boolean,
-    val previousPayload: Map<String, Any>? = null,
+    val previousPayload: Map<String, Any?>?,
     val version: String,
     val createdOn: Instant,
     val modifiedOn: Instant
