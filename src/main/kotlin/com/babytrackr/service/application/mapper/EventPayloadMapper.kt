@@ -14,15 +14,22 @@ class EventPayloadMapper(
     fun toMap(payload: EventPayload): Map<String, Any?> {
         return when (payload) {
             is EventPayload.FeedPayload -> mapOf(
-                "feedingAmount" to payload.feedingAmount
+                "feedingAmount" to payload.feedingAmount,
+                "notes" to payload.notes,
+                "eventTime" to payload.eventTime
             )
 
             is EventPayload.SleepPayload -> mapOf(
-                "sleepDuration" to payload.sleepDurationMin
+                "sleepDuration" to payload.sleepDurationMin,
+                "notes" to payload.notes,
+                "startTime" to payload.startTime,
+                "endTime" to payload.endTime
             )
 
             is EventPayload.DiaperPayload -> mapOf(
                 "diaperType" to payload.diaperType,
+                "notes" to payload.notes,
+                "eventTime" to payload.eventTime
             )
         }
     }
