@@ -46,7 +46,9 @@ curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -d '{
    "eventType":"FEED",
    "payload": {
-    "feedingAmount": 5
+    "feedingAmount": 5,
+    "notes": null,
+    "eventTime": "2026-08-03T12:00:00.000Z"
    }
 }'
 curl -i -X POST http://localhost:8080/v1/babies/1/events \
@@ -54,7 +56,10 @@ curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -d '{
    "eventType":"SLEEP",
    "payload": {
-    "sleepDurationMin": 60
+    "sleepDurationMin": 60,
+    "notes": null,
+    "startTime": "2026-08-03T12:00:00.000Z",
+    "endTime": "2026-08-03T13:00:00.000Z",
    }
 }'
 
@@ -63,7 +68,9 @@ curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -d '{
    "eventType":"DIAPER",
    "payload": {
-    "diaperType": "WET"
+    "diaperType": "WET",
+    "notes": null,
+    "eventTime": "2026-08-03T12:00:00.000Z"
    }
 }'
 
