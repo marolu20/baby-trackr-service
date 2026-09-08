@@ -27,6 +27,7 @@ class EventEntity(
     var id: Long?,
     @Enumerated(EnumType.STRING)
     var eventType: EventType,
+    var eventTime: Instant,
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     var payload: String,

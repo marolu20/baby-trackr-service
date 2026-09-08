@@ -16,7 +16,6 @@ class EventPayloadMapper(
             is EventPayload.FeedPayload -> mapOf(
                 "feedingAmount" to payload.feedingAmount,
                 "notes" to payload.notes,
-                "eventTime" to payload.eventTime
             )
 
             is EventPayload.SleepPayload -> mapOf(
@@ -29,7 +28,6 @@ class EventPayloadMapper(
             is EventPayload.DiaperPayload -> mapOf(
                 "diaperType" to payload.diaperType,
                 "notes" to payload.notes,
-                "eventTime" to payload.eventTime
             )
         }
     }
