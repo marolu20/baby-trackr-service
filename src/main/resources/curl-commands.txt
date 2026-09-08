@@ -95,3 +95,19 @@ curl -X PATCH http://localhost:8080/v1/babies/1/events/1 \
 Delete Event
 ==============
 curl -i -X DELETE http://localhost:8080/v1/babies/1/events/2
+
+
+==============
+Activity Controller
+==============
+
+Get Activity
+==============
+curl -i http://localhost:8080/v1/activity
+curl -i http://localhost:8080/v1/activity?babyId=35
+curl -i http://localhost:8080/v1/activity?type=FEED
+curl -i "http://localhost:8080/v1/activity?startDate=2026-07-03&endDate=2026-07-05"
+curl -i http://localhost:8080/v1/activity?sortBy=timestamp,ascending
+curl -i http://localhost:8080/v1/activity?sortBy=timestamp,descending
+curl -i http://localhost:8080/v1/activity?sortBy=type,ascending
+curl -i http://localhost:8080/v1/activity?sortBy=type,descending
