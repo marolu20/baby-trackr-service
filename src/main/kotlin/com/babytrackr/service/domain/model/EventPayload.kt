@@ -6,9 +6,8 @@ import java.time.Instant
 sealed class EventPayload {
 
     data class FeedPayload(
-        val feedingAmount: Int,
+        val feedingAmount: Double,
         val notes: String? = null,
-        val eventTime: Instant,
     ): EventPayload() {
 
         init {
@@ -34,6 +33,5 @@ sealed class EventPayload {
     data class DiaperPayload(
         val diaperType: DiaperType,
         val notes: String? = null,
-        val eventTime: Instant,
     ): EventPayload()
 }
