@@ -7,6 +7,7 @@ data class Event(
     val id: Long?,
     val babyId: Long,
     val eventType: EventType,
+    val eventTime: Instant,
     val payload: EventPayload,
     val version: String = "v1",
     val isCorrected: Boolean = false,

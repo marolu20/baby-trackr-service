@@ -16,6 +16,8 @@ import com.babytrackr.service.infrastucture.messaging.producer.KafkaProducerServ
 import com.babytrackr.service.infrastucture.model.EventMessage
 import com.babytrackr.service.infrastucture.repositories.EventEntity
 import com.babytrackr.service.infrastucture.repositories.EventRepository
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.Instant
 
@@ -29,6 +31,10 @@ class EventService(
     private val kafkaProperties: KafkaProperties
 ) {
 
+    private companion object {
+        val logger: Logger = LoggerFactory.getLogger(EventService::class.java)
+    }
+
     fun createEvent(request: CreateEventRequestDto, babyId: Long): EventResponseDto {
 
         val persistedBaby = babyFinder.getBabyOrThrow(babyId)
@@ -40,6 +46,7 @@ class EventService(
             id = null,
             babyId = babyId,
             eventType = request.eventType,
+            eventTime = request.eventTime,
             payload = mappedPayload,
             previousPayload = null,
             createdOn = currentDate,
@@ -112,17 +119,13 @@ class EventService(
     private fun mapPayload(type: EventType, payload: Map<String, Any?>): EventPayload {
         return when (type) {
             EventType.FEED -> FeedPayload(
-                feedingAmount = (payload["feedingAmount"] as? Int)
-                    ?: throw IllegalArgumentException("feedingAmount must be an Int"),
+                feedingAmount = (payload["feedingAmount"] as? Number)?.toDouble()
+                    ?: throw IllegalArgumentException("feedingAmount must be an Double"),
                 notes = (payload["notes"] as? String),
-                eventTime = Instant.parse(
-                    payload["eventTime"] as? String
-                    ?: throw IllegalArgumentException("eventTime is required")
-                )
             )
 
             EventType.SLEEP -> SleepPayload(
-                sleepDurationMin = (payload["sleepDurationMin"] as? Int)
+                sleepDurationMin = (payload["sleepDurationMin"] as? Number)?.toInt()
                 ?: throw IllegalArgumentException("sleepDurationMin must be an Int"),
                 notes = (payload["notes"] as? String),
                 startTime = Instant.parse(
@@ -139,11 +142,7 @@ class EventService(
                 diaperType = DiaperType.entries.find {
                     it.name.equals(payload["diaperType"] as? String, ignoreCase = true)
                 } ?: throw IllegalArgumentException("Invalid diaperType"),
-                notes = (payload["notes"] as? String),
-                Instant.parse(
-                    payload["eventTime"] as? String
-                        ?: throw IllegalArgumentException("eventTime is required")
-                )
+                notes = (payload["notes"] as? String)
             )
         }
     }
