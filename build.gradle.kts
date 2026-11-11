@@ -65,3 +65,7 @@ kotlin {
     }
 }
 
+tasks.bootJar {
+    archiveFileName.set("app.jar")
+}
+

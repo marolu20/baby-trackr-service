@@ -1,3 +1,28 @@
+server:
+  port: 8080
 spring:
-  application:
-    name: BabyTrackr
+  config:
+    import: "optional:file:.env[.properties]" # loads the .env file
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_MAIN_USERNAME}
+    password: ${DB_MAIN_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update # automatically creates and updates tables based on your Kotlin entities
+    properties:
+      hibernate:
+        type:
+          json_format_mapper: jackson
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+babytrackr:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    topics:
+      baby-events: baby-events

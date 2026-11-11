@@ -21,6 +21,6 @@ spring:
           json_format_mapper: jackson
 babytrackr:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
     topics:
       baby-events: baby-events

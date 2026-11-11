@@ -45,16 +45,17 @@ curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -H "Content-Type: application/json" \
 -d '{
    "eventType":"FEED",
+   "eventTime": "2026-08-03T12:00:00.000Z",
    "payload": {
     "feedingAmount": 5,
-    "notes": null,
-    "eventTime": "2026-08-03T12:00:00.000Z"
+    "notes": null
    }
 }'
 curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -H "Content-Type: application/json" \
 -d '{
    "eventType":"SLEEP",
+   "eventTime": "2026-08-03T12:00:00.000Z",
    "payload": {
     "sleepDurationMin": 60,
     "notes": null,
@@ -67,10 +68,10 @@ curl -i -X POST http://localhost:8080/v1/babies/1/events \
 -H "Content-Type: application/json" \
 -d '{
    "eventType":"DIAPER",
+   "eventTime": "2026-08-03T12:00:00.000Z",
    "payload": {
     "diaperType": "WET",
     "notes": null,
-    "eventTime": "2026-08-03T12:00:00.000Z"
    }
 }'
 
